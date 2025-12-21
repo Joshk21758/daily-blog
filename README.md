@@ -1,53 +1,116 @@
-> Edited for use in IDX on 07/09/12
+# daily-blog
 
-# Welcome to your Expo app 👋
+A simple daily blog mobile/web app built with Expo. This repository contains the source code for a minimal blog app where you can write, edit, and view daily posts. The project uses the Expo managed workflow so it runs on Android, iOS (simulators), and the web.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Features
 
-## Get started
+- Create, edit, and delete daily blog posts
+- Local development with Expo (Android, iOS simulator, web)
+- File-based app structure suitable for small projects and prototypes
+- Simple, minimal UI focused on writing and reading
 
-#### Android
+## Tech stack
 
-Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
+- Expo (managed workflow)
+- React Native
+- React Navigation (for app routing)
+- Optional: any backend or persistence layer (e.g., Firebase, REST API, or local storage)
 
-Note, if you can't find the task, either:
-- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
-- Run `npm run android -- --tunnel` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
+## Prerequisites
 
-In the output of this command/task, you'll find options to open the app in a
+- Node.js (16+ recommended)
+- npm or Yarn
+- Expo CLI (optional but useful): `npm install -g expo-cli`
+- Android Studio / Xcode for emulators (optional)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Install
 
-You'll also find options to open the app's developer menu, reload the app, and more.
-
-#### Web
-
-Web previews will be started and managred automatically. Use the toolbar to manually refresh.
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+1. Clone the repository:
 
 ```bash
-npm run reset-project
+git clone https://github.com/Joshk21758/daily-blog.git
+cd daily-blog
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install dependencies:
 
-## Learn more
+```bash
+npm install
+# or
+yarn install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Run locally
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Start the Expo development server:
 
-## Join the community
+```bash
+npm start
+# or
+yarn start
+```
 
-Join our community of developers creating universal apps.
+From the Expo dev tools you can:
+- Open on Android (emulator or connected device)
+- Open on iOS simulator (macOS + Xcode)
+- Open in the web browser
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Common commands you may also use:
+
+```bash
+# Run on Android device/emulator
+expo run:android
+
+# Run on iOS simulator (macOS only)
+expo run:ios
+
+# Start web preview
+expo start --web
+```
+
+If you use a custom backend or environment variables, create a `.env` file in the project root (this repository does not include secrets). Example:
+
+```.env
+REACT_APP_API_URL=https://api.example.com
+```
+
+Make sure to add `.env` to `.gitignore` if it isn't already.
+
+## Project structure (typical)
+
+- `app/` — main app source (file-based routing if using Expo Router)
+- `assets/` — images, fonts, and static files
+- `package.json` — scripts and dependencies
+- `README.md` — this file
+
+Adjust these paths if your project uses a different layout.
+
+## Tests
+
+This repository does not include a test suite by default. To add tests consider using Jest and React Native Testing Library.
+
+## Contributing
+
+Contributions are welcome. To contribute:
+
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feat/your-feature`.
+3. Make your changes and add tests where appropriate.
+4. Commit your changes with a clear message.
+5. Push to your fork and open a pull request describing your changes.
+
+Please follow standard GitHub community practices for pull requests. If you want specific guidance (code style, linting), add it to a CONTRIBUTING.md file.
+
+## License
+
+This project is released under the MIT License. See the LICENSE file for details. If there is no LICENSE file in the repo and you want a different license, update this section accordingly.
+
+## Contact
+
+Maintained by Joshk21758 — https://github.com/Joshk21758
+
+If you have suggestions or issues, please open GitHub issues in this repository.
+
+---
+
+> README generated and updated by GitHub Copilot Chat Assistant on user request.
