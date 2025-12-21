@@ -1,16 +1,21 @@
-
-import { useRouter } from 'expo-router';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useRouter } from "expo-router";
+import { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function FeedbackPage() {
   const router = useRouter();
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState("");
 
   const handleSend = () => {
     // Implement your feedback logic here
-    console.log('Sending feedback:', { feedback });
-    router.push('/'); // Redirect to home page after sending feedback
+    console.log("Sending feedback:", { feedback });
+    router.push("/"); // Redirect to home page after sending feedback
   };
 
   return (
@@ -18,12 +23,14 @@ export default function FeedbackPage() {
       <Text style={styles.title}>Feedback</Text>
       <TextInput
         style={styles.input}
-        placeholder="Write your feedback here..."
+        placeholder="Write your Feedback here..."
         value={feedback}
         onChangeText={setFeedback}
         multiline
       />
-      <Button title="Send" onPress={handleSend} />
+      <TouchableOpacity style={styles.button} onPress={handleSend}>
+        Send feedback
+      </TouchableOpacity>
       <Text style={styles.link} onPress={() => router.back()}>
         Go back
       </Text>
@@ -37,21 +44,41 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 16,
+    fontSize: 47,
+    fontWeight: "bold",
+    marginBottom: 20,
+    marginTop: 45,
   },
   input: {
     height: 120,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
+    borderColor: "black",
+    borderWidth: 2,
+    marginBottom: 30,
+    marginTop: 15,
+    borderRadius: 12,
+    fontSize: 18,
     paddingHorizontal: 8,
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
   },
   link: {
-    marginTop: 16,
-    color: 'blue',
-    textAlign: 'center',
+    marginTop: 20,
+    color: "blue",
+    fontSize: 20,
+    textAlign: "center",
+  },
+
+  button: {
+    borderRadius: 12,
+    height: 45,
+    width: 280,
+    marginLeft: 24,
+    alignItems: "center",
+    color: "white",
+    fontSize: 20,
+    paddingTop: 10,
+    fontFamily: "sans-serif",
+    fontWeight: 700,
+    marginTop: 10,
+    backgroundColor: "green",
   },
 });
