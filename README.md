@@ -6,7 +6,6 @@ A simple daily blog mobile/web app built with Expo. This repository contains the
 
 - Create, edit, and delete daily blog posts
 - Local development with Expo (Android, iOS simulator, web)
-- File-based app structure suitable for small projects and prototypes
 - Simple, minimal UI focused on writing and reading
 
 ## Tech stack
