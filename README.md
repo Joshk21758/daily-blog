@@ -13,7 +13,7 @@ A simple daily blog mobile/web app built with Expo. This repository contains the
 - Expo (managed workflow)
 - React Native
 - React Navigation (for app routing)
-- Optional: any backend or persistence layer (e.g., Firebase, REST API, or local storage)
+- Recommended: any backend or persistence layer (e.g., Firebase, REST API, or local storage)
 
 ## Prerequisites
 
