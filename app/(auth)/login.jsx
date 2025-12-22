@@ -33,12 +33,13 @@ export default function LoginPage() {
       });
       //check if successful
       if (response.status === 200) {
+        alert("Logged in successfully");
         router.push("/");
       } else {
-        alert(response.data?.message || "Login failed");
+        alert("Login failed");
       }
     } catch (err) {
-      alert(err.response?.data?.message || err.message || "Failed to Login");
+      alert("Failed to Login", err);
     } finally {
       setLoading(false);
     }

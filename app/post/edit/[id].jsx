@@ -41,10 +41,11 @@ export default function PostPage({ route }) {
         updatePostData
       );
       //check if response is successful
-      if (response.status === 200) {
+      if (!response.status === 200) {
         alert("Failed to Update the Post");
       }
       //navigate to Home page
+      alert("Updated the post successfully");
       router.push("/");
     } catch (err) {
       alert("Failed to edit the post", err);

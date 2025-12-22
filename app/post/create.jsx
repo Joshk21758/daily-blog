@@ -37,6 +37,7 @@ export default function CreatePostPage() {
       }
 
       //navigate to home page
+      alert("Post created...");
       router.push("/");
     } catch (err) {
       alert("Failed to create post", err);

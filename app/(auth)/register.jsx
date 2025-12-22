@@ -21,7 +21,7 @@ export default function RegisterPage() {
   const handleRegister = async () => {
     //client-side validation
     if (!username || !email || !password) {
-      alert("Please fill valid credentials");
+      alert("Please fill in all fields");
       return;
     }
 
