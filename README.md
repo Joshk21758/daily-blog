@@ -1,4 +1,4 @@
-# daily-blog
+# Daily-blog 
 
 A simple daily blog mobile/web app built with Expo. This repository contains the source code for a minimal blog app where you can write, edit, and view daily posts. The project uses the Expo managed workflow so it runs on Android, iOS (simulators), and the web.
 
