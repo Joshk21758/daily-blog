@@ -37,8 +37,8 @@ export default function RegisterPage() {
       //check if response successful
       if (response.status === 200) {
         //navigate to Home page
-        router.push("/");
         alert("Successfully registered...");
+        router.push("/post/create");
       } else {
         alert("Registration failed");
       }
