@@ -34,7 +34,7 @@ export default function LoginPage() {
       //check if successful
       if (response.status === 200) {
         alert("Logged in successfully");
-        router.push("/");
+        router.push("/post/create");
       } else {
         alert("Login failed");
       }

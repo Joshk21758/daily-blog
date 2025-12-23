@@ -72,7 +72,9 @@ export default function CreatePostPage() {
         onPress={handleCreatePost}
         disabled={isPending}
       >
-        {isPending ? "Posting..." : "Upload a Post"}
+        <Text style={styles.buttonText}>
+          {isPending ? "Posting..." : "Upload a Post"}
+        </Text>
       </TouchableOpacity>
       <Text style={styles.link} onPress={() => router.back()}>
         Cancel
@@ -135,5 +137,10 @@ const styles = StyleSheet.create({
   iconContainer: {
     marginLeft: 123,
     marginBottom: -10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "700",
   },
 });
