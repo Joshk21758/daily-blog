@@ -20,7 +20,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     //client-side validation
     if (!email || !password) {
-      alert("Please enter a valid credentials");
+      alert("Please enter valid credentials");
       return;
     }
 

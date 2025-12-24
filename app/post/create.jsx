@@ -15,7 +15,7 @@ export default function CreatePostPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isPending, setIsPending] = useState(true);
+  const [isPending, setIsPending] = useState(false);
 
   const handleCreatePost = async () => {
     //client-side validation
@@ -32,7 +32,7 @@ export default function CreatePostPage() {
         newPostData
       );
       //check if response is successfull
-      if (!response.status === 200) {
+      if (!response.status === 201) {
         alert("Failed to Create the Post");
       }
 

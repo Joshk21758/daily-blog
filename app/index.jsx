@@ -4,7 +4,7 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
-export default function Page() {
+export default function Posts() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -12,7 +12,7 @@ export default function Page() {
     async function getPosts() {
       try {
         //send request to API
-        const response = await axios.get(`${API_BASE_URL}/`);
+        const response = await axios.get(`${API_BASE_URL}/post/`);
         //express API must send an array of posts
         setPosts(response.data);
         setLoading(false);
@@ -26,7 +26,7 @@ export default function Page() {
 
   if (loading) {
     return (
-      <Text style={{ fontSize: 40, textAlign: "center" }}>
+      <Text style={{ fontSize: 32, textAlign: "center" }}>
         Loading Posts...
       </Text>
     );
@@ -36,14 +36,14 @@ export default function Page() {
     <View style={styles.container}>
       <FlatList
         data={posts}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <Link href={`/post/show/${item._id}`}>
-            <View style={styles.postContainer}>
-              <Text style={styles.postTitle}>{item.title}</Text>
-              <Text style={styles.postTitle}>{item.content}</Text>
-            </View>
-          </Link>
+        keyExtractor={(post) => post._id}
+        renderItem={({ item: post }) => (
+          <View style={styles.postContainer}>
+            <Text style={styles.postTitle}>{post.title}</Text>
+            <Link href={`/post/show/${post._id}`}>
+              <Text>Read More</Text>
+            </Link>
+          </View>
         )}
       />
     </View>
@@ -53,15 +53,8 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-  },
-  postContainer: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-  },
-  postTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
+    justifyContent: "center",
+    padding: 17,
+    paddingTop: 20,
   },
 });
