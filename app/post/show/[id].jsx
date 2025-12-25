@@ -48,6 +48,7 @@ export default function PostPage() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Post Details📖</Text>
       <PostCard post={post} />
       <Text style={styles.link} onPress={() => router.back()}>
         Go back
@@ -60,11 +61,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    paddingTop: 50,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "600",
-    marginBottom: 16,
+    fontSize: 40,
+    marginLeft: 8,
+    fontWeight: "500",
+    fontFamily: "sans-serif",
+    marginBottom: 15,
   },
   content: {
     fontSize: 18,
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     color: "blue",
     textDecorationLine: "underline",
-    fontSize: 20,
+    fontSize: 25,
     marginLeft: 10,
     fontWeight: "500",
   },

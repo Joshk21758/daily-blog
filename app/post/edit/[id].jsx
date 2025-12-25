@@ -113,9 +113,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "600",
-    marginBottom: 40,
+    marginBottom: 30,
     marginLeft: 9,
-    color: "rgba(6, 32, 80, 0.33)",
+    color: "rgba(9, 29, 247, 1)",
   },
   input: {
     borderWidth: 3,

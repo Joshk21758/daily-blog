@@ -34,7 +34,7 @@ export default function Page() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recent Posts...</Text>
+      <Text style={styles.title}>Recent Posts💭</Text>
       <FlatList
         data={posts}
         keyExtractor={(post) => post._id}
@@ -52,9 +52,10 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 37,
-    marginLeft: 10,
-    fontWeight: "700",
+    fontSize: 40,
+    marginLeft: 8,
+    fontWeight: "500",
+    fontFamily: "sans-serif",
     marginBottom: 15,
   },
 });
