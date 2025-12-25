@@ -1,16 +1,22 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../../config/api";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-export default function PostPage({ route }) {
+export default function PostPage() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [isPending, setIsPending] = useState(false);
-  const { id } = route.params;
+  const { id } = useLocalSearchParams();
 
   useEffect(() => {
     async function fetchPost() {
@@ -25,7 +31,10 @@ export default function PostPage({ route }) {
         setLoading(false);
       }
     }
-    fetchPost();
+    //check if id is valid
+    if (id) {
+      fetchPost();
+    }
   }, [id]);
 
   //Handle update form submission
@@ -36,7 +45,7 @@ export default function PostPage({ route }) {
       const updatePostData = { title, content };
 
       //send request to express API
-      const response = await axios.post(
+      const response = await axios.put(
         `${API_BASE_URL}/post/edit/${id}`,
         updatePostData
       );
@@ -62,20 +71,35 @@ export default function PostPage({ route }) {
     );
   }
 
-  if (isPending) {
-    return (
-      <Text style={{ fontSize: 40, textAlign: "center" }}>
-        Updating the post..
-      </Text>
-    );
-  }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Post Title</Text>
-      <Text style={styles.content}>Content</Text>
+      <Text style={styles.title}>Edit your Post</Text>
+      <Text style={styles.label}>Title</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter a title"
+        value={title}
+        onChangeText={setTitle}
+      />
+      <Text style={styles.label}>Content</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Write about something..."
+        value={content}
+        onChangeText={setContent}
+        multiline
+      />
+      <TouchableOpacity
+        style={styles.updateButton}
+        onPress={handleUpdate}
+        disabled={isPending}
+      >
+        <Text style={styles.buttonText}>
+          {isPending ? "Updating post..." : "Save changes"}
+        </Text>
+      </TouchableOpacity>
       <Text style={styles.link} onPress={() => router.back()}>
-        Go back
+        Cancel
       </Text>
     </View>
   );
@@ -87,16 +111,53 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
+    fontSize: 35,
+    fontWeight: "600",
+    marginBottom: 40,
+    marginLeft: 9,
+    color: "rgba(6, 32, 80, 0.33)",
   },
-  content: {
-    fontSize: 18,
+  input: {
+    borderWidth: 3,
+    borderColor: "#0441e8ff",
+    borderRadius: 12,
+    padding: 7,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 23,
+    fontSize: 20,
   },
   link: {
     marginTop: 16,
     color: "blue",
     textDecorationLine: "underline",
+    fontSize: 25,
+    textAlign: "center",
+  },
+  updateButton: {
+    borderRadius: 12,
+    height: 45,
+    width: 280,
+    marginLeft: 24,
+    alignItems: "center",
+    color: "white",
+    fontSize: 20,
+    paddingTop: 10,
+    fontFamily: "sans-serif",
+    fontWeight: 700,
+    marginTop: 10,
+    backgroundColor: "green",
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 700,
+    marginLeft: 10,
+    marginBottom: 13,
+  },
+
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    fontWeight: "700",
   },
 });

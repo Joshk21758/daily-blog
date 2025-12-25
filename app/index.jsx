@@ -1,10 +1,10 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config/api";
-import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import PostCard from "../components/postcard";
 
-export default function Posts() {
+export default function Page() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,7 +26,7 @@ export default function Posts() {
 
   if (loading) {
     return (
-      <Text style={{ fontSize: 32, textAlign: "center" }}>
+      <Text style={{ fontSize: 30, textAlign: "center", marginTop: 20 }}>
         Loading Posts...
       </Text>
     );
@@ -34,18 +34,12 @@ export default function Posts() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Recent Posts...</Text>
       <FlatList
         data={posts}
         keyExtractor={(post) => post._id}
-        renderItem={({ item: post }) => (
-          <View style={styles.postContainer}>
-            <Text style={styles.postTitle}>{post.title}</Text>
-            <Link href={`/post/show/${post._id}`}>
-              <Text>Read More</Text>
-            </Link>
-          </View>
-        )}
-      />
+        renderItem={({ item }) => <PostCard post={item} />}
+      ></FlatList>
     </View>
   );
 }
@@ -53,8 +47,14 @@ export default function Posts() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 17,
-    paddingTop: 20,
+    paddingTop: 50,
+  },
+
+  title: {
+    fontSize: 37,
+    marginLeft: 10,
+    fontWeight: "700",
+    marginBottom: 15,
   },
 });

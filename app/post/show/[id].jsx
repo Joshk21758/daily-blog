@@ -1,13 +1,14 @@
 import axios from "axios";
 import { API_BASE_URL } from "../../../config/api";
-import { useRouter } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import PostCard from "../../../components/postcard";
 
-export default function PostPage({ route }) {
-  const [post, setPost] = useState([]);
+export default function PostPage() {
+  const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { id } = route.params;
+  const { id } = useLocalSearchParams();
   const router = useRouter();
 
   useEffect(() => {
@@ -19,10 +20,14 @@ export default function PostPage({ route }) {
         setLoading(false);
       } catch (err) {
         alert("Failed to fetch the post", err);
+      } finally {
         setLoading(false);
       }
     }
-    getPost();
+    //check if id is valid
+    if (id) {
+      getPost();
+    }
   }, [id]);
 
   if (loading) {
@@ -43,8 +48,7 @@ export default function PostPage({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Post Title</Text>
-      <Text style={styles.content}>Content</Text>
+      <PostCard post={post} />
       <Text style={styles.link} onPress={() => router.back()}>
         Go back
       </Text>
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "600",
     marginBottom: 16,
   },
   content: {
@@ -69,5 +73,8 @@ const styles = StyleSheet.create({
     marginTop: 16,
     color: "blue",
     textDecorationLine: "underline",
+    fontSize: 20,
+    marginLeft: 10,
+    fontWeight: "500",
   },
 });

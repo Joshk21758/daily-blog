@@ -19,7 +19,7 @@ export default function CreatePostPage() {
 
   const handleCreatePost = async () => {
     //client-side validation
-    if (!title || !content) {
+    if (!title.trim() || !content.trim()) {
       alert("Please fill in all fields");
     }
     setIsPending(true);
