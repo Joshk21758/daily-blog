@@ -1,5 +1,4 @@
-import axios from "axios";
-import { API_BASE_URL } from "../config/api";
+import API from "../config/axios";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import PostCard from "../components/postcard";
@@ -12,7 +11,7 @@ export default function Page() {
     async function getPosts() {
       try {
         //send request to API
-        const response = await axios.get(`${API_BASE_URL}/post/`);
+        const response = await API.get("/post/");
         //express API must send an array of posts
         setPosts(response.data);
         setLoading(false);
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 40,
+    fontSize: 32,
     marginLeft: 8,
     fontWeight: "500",
     fontFamily: "sans-serif",

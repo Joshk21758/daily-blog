@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../../config/api";
+import API from "../../config/axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   StyleSheet,
@@ -19,7 +19,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     //client-side validation
-    if (!email || !password) {
+    if (!email.trim() || !password.trim()) {
       alert("Please enter valid credentials");
       return;
     }
@@ -27,19 +27,27 @@ export default function LoginPage() {
     setLoading(true);
     try {
       //send request to express API
-      const response = await axios.post(`${API_BASE_URL}/user/login`, {
+      const response = await API.post("/user/login", {
         email,
         password,
       });
-      //check if successful
-      if (response.status === 200) {
-        alert("Logged in successfully");
-        router.push("/post/create");
-      } else {
-        alert("Login failed");
+
+      //check if response is successfull
+      if (response.status !== 200) {
+        alert("Failed to Login..");
       }
+
+      //Extract and save token
+      const { token } = response.data;
+      await AsyncStorage.setItem("token", token);
+
+      //Navigate
+      alert("Successfully logged in..");
+      router.replace("/post/create");
     } catch (err) {
-      alert("Failed to Login", err);
+      const msg =
+        err?.response?.data?.message || err.message || "Failed to Login";
+      alert(msg);
     } finally {
       setLoading(false);
     }

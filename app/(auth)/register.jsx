@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../../config/api";
+import API from "../../config/axios";
 import { MaterialIcons } from "@expo/vector-icons";
 import {
   StyleSheet,
@@ -20,7 +19,7 @@ export default function RegisterPage() {
 
   const handleRegister = async () => {
     //client-side validation
-    if (!username || !email || !password) {
+    if (!username.trim() || !email.trim() || !password.trim()) {
       alert("Please fill in all fields");
       return;
     }
@@ -28,7 +27,7 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       //Send request to express API
-      const response = await axios.post(`${API_BASE_URL}/user/register`, {
+      const response = await API.post("/user/register", {
         username,
         email,
         password,
@@ -38,7 +37,7 @@ export default function RegisterPage() {
       if (response.status === 200) {
         //navigate to Home page
         alert("Successfully registered...");
-        router.push("/post/create");
+        router.replace("/post/create");
       } else {
         alert("Registration failed");
       }

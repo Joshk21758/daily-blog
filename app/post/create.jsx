@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { API_BASE_URL } from "../../config/api";
+import API from "../../config/axios";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import {
@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import axios from "axios";
 
 export default function CreatePostPage() {
   const router = useRouter();
@@ -27,17 +26,14 @@ export default function CreatePostPage() {
       //send request to express API
       //create post data
       const newPostData = { title, content };
-      const response = await axios.post(
-        `${API_BASE_URL}/post/create`,
-        newPostData
-      );
+      const response = await API.post("/post/create", newPostData);
       //check if response is successfull
-      if (!response.status === 201) {
+      if (response.status !== 201) {
         alert("Failed to Create the Post");
       }
 
       //navigate to home page
-      alert("Post created...");
+      alert("Post created successfully...");
       router.push("/");
     } catch (err) {
       alert("Failed to create post", err);
@@ -61,7 +57,7 @@ export default function CreatePostPage() {
       />
       <Text style={styles.label}>Content</Text>
       <TextInput
-        style={styles.input}
+        style={styles.input2}
         placeholder="Write about something..."
         value={content}
         onChangeText={setContent}
@@ -107,6 +103,17 @@ const styles = StyleSheet.create({
     marginBottom: 23,
     fontSize: 20,
   },
+  input2: {
+    borderWidth: 3,
+    borderColor: "#0441e8ff",
+    borderRadius: 12,
+    padding: 7,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 23,
+    fontSize: 20,
+    height: 155,
+  },
   link: {
     marginTop: 16,
     color: "blue",
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif",
     fontWeight: 700,
     marginTop: 10,
-    backgroundColor: "green",
+    backgroundColor: "rgba(22, 82, 5, 0.93)",
   },
   label: {
     fontSize: 18,

@@ -1,9 +1,15 @@
-import axios from "axios";
-import { API_BASE_URL } from "../../../config/api";
+import API from "../../../config/axios";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import PostCard from "../../../components/postcard";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function PostPage() {
   const [post, setPost] = useState(null);
@@ -15,7 +21,7 @@ export default function PostPage() {
     async function getPost() {
       try {
         //send request to express API
-        const response = await axios.get(`${API_BASE_URL}/post/show/${id}`);
+        const response = await API.get(`/post/show/${id}`);
         setPost(response.data);
         setLoading(false);
       } catch (err) {
@@ -30,9 +36,31 @@ export default function PostPage() {
     }
   }, [id]);
 
+  //handle delete submission
+  const handleDelete = async () => {
+    try {
+      //Send request to Express API
+      const response = await API.delete(`/post/show/${id}`);
+      if (response.status !== 200) {
+        alert("Failed to Delete the post..");
+      }
+      alert("Post deleted successfully..");
+      router.push("/post/create");
+    } catch (err) {
+      alert("Failed to delete post!", err);
+    }
+  };
+
   if (loading) {
     return (
-      <Text style={{ fontSize: 40, textAlign: "center" }}>
+      <Text
+        style={{
+          fontSize: 35,
+          textAlign: "center",
+          marginTop: 40,
+          fontWeight: "500",
+        }}
+      >
         Loading the Post...
       </Text>
     );
@@ -48,8 +76,19 @@ export default function PostPage() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Post Details📖</Text>
+      <Text style={styles.title}>Post Details</Text>
       <PostCard post={post} />
+      <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+        <View>
+          <MaterialIcons name="delete-outline" size={33} color="white" />
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.editButton}
+        onPress={() => router.push(`/post/edit/${id}`)}
+      >
+        <MaterialIcons name="edit-note" size={33} color="white" />
+      </TouchableOpacity>
       <Text style={styles.link} onPress={() => router.back()}>
         Go back
       </Text>
@@ -64,7 +103,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
     marginLeft: 8,
     fontWeight: "500",
     fontFamily: "sans-serif",
@@ -74,11 +113,36 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   link: {
-    marginTop: 16,
+    marginTop: 60,
     color: "blue",
     textDecorationLine: "underline",
     fontSize: 25,
-    marginLeft: 10,
+    textAlign: "center",
     fontWeight: "500",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 25,
+    fontWeight: "700",
+  },
+  editButton: {
+    borderRadius: 12,
+    width: 40,
+    height: 42,
+    marginLeft: 90,
+    marginTop: -92,
+    backgroundColor: "rgba(0, 0, 0, 0.97)",
+  },
+
+  deleteButton: {
+    borderRadius: 12,
+    height: 40,
+    width: 38,
+    marginLeft: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+    marginBottom: 50,
+    backgroundColor: "rgba(0, 0, 0, 0.97)",
   },
 });

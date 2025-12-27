@@ -1,5 +1,4 @@
-import axios from "axios";
-import { API_BASE_URL } from "../../../config/api";
+import API from "../../../config/axios";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -22,7 +21,7 @@ export default function PostPage() {
     async function fetchPost() {
       try {
         //send request to express API
-        const response = await axios.get(`${API_BASE_URL}/post/show/${id}`);
+        const response = await API.get(`/post/show/${id}`);
         setTitle(response.data.title);
         setContent(response.data.content);
       } catch (err) {
@@ -45,12 +44,9 @@ export default function PostPage() {
       const updatePostData = { title, content };
 
       //send request to express API
-      const response = await axios.put(
-        `${API_BASE_URL}/post/edit/${id}`,
-        updatePostData
-      );
+      const response = await API.put(`/post/edit/${id}`, updatePostData);
       //check if response is successful
-      if (!response.status === 200) {
+      if (response.status !== 200) {
         alert("Failed to Update the Post");
       }
       //navigate to Home page
@@ -65,7 +61,7 @@ export default function PostPage() {
 
   if (loading) {
     return (
-      <Text style={{ fontSize: 40, textAlign: "center" }}>
+      <Text style={{ fontSize: 30, textAlign: "center", marginTop: 40 }}>
         Loading the Post..
       </Text>
     );
@@ -83,7 +79,7 @@ export default function PostPage() {
       />
       <Text style={styles.label}>Content</Text>
       <TextInput
-        style={styles.input}
+        style={styles.input2}
         placeholder="Write about something..."
         value={content}
         onChangeText={setContent}
@@ -111,15 +107,16 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 35,
+    fontSize: 32,
     fontWeight: "600",
     marginBottom: 30,
     marginLeft: 9,
-    color: "rgba(9, 29, 247, 1)",
+    color: "rgba(0, 0, 0, 1)",
+    marginTop: 32,
   },
   input: {
     borderWidth: 3,
-    borderColor: "#0441e8ff",
+    borderColor: "rgba(7, 72, 170, 0.91)",
     borderRadius: 12,
     padding: 7,
     marginLeft: 8,
@@ -127,12 +124,23 @@ const styles = StyleSheet.create({
     marginBottom: 23,
     fontSize: 20,
   },
+  input2: {
+    borderWidth: 3,
+    borderRadius: 12,
+    padding: 7,
+    marginLeft: 8,
+    marginRight: 8,
+    marginBottom: 23,
+    fontSize: 20,
+    height: 155,
+  },
   link: {
     marginTop: 16,
     color: "blue",
     textDecorationLine: "underline",
     fontSize: 25,
     textAlign: "center",
+    fontWeight: "500",
   },
   updateButton: {
     borderRadius: 12,
@@ -142,11 +150,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: "white",
     fontSize: 20,
-    paddingTop: 10,
+    paddingTop: 6,
     fontFamily: "sans-serif",
     fontWeight: 700,
     marginTop: 10,
-    backgroundColor: "green",
+    backgroundColor: "rgba(22, 82, 5, 0.93)",
+    marginBottom: 15,
   },
   label: {
     fontSize: 18,
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: "white",
-    fontSize: 20,
-    fontWeight: "700",
+    fontSize: 22,
+    fontWeight: "500",
   },
 });
